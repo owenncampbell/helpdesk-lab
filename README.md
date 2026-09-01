@@ -30,8 +30,8 @@ flowchart TB
 
 | Date | Component | Status | Notes |
 |---|---|---|---|
-| _TBD_ | Ticketing system install (Docker) | Not started | |
-| _TBD_ | End-user client VM | Not started | |
+| 2026-08-31 | Ticketing system install (Docker) | ✅ Running | Real osTicket instance via Docker Compose — see [`ticketing-system/`](ticketing-system/) |
+| _TBD_ | End-user client VM | Not started | Needs a Windows license/ISO — my own work to do |
 | _TBD_ | Remote support tool setup | Not started | |
 | _TBD_ | AD integration | Not started | Depends on home lab existing |
 
@@ -42,6 +42,6 @@ flowchart TB
 
 ## Tools
 
-- Ticketing: [osTicket](https://osticket.com/) or [Zammad](https://zammad.org/)
+- Ticketing: [osTicket](https://osticket.com/) (running — see [`ticketing-system/`](ticketing-system/))
 - Remote support: [RustDesk](https://rustdesk.com/) (open-source) or Windows Remote Assistance
 - Client OS: Windows 10/11 VM

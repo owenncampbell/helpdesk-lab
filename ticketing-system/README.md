@@ -1,31 +1,46 @@
 # Ticketing System Setup
 
-Plan for standing up a self-hosted ticketing system to practice a real helpdesk queue.
+A real, self-hosted [osTicket](https://osticket.com/) instance running via Docker Compose — not a mockup.
 
-## Option A: osTicket
-
-```bash
-# Example using Docker (fill in with actual steps once run)
-docker run -d --name osticket -p 80:80 \
-  -e MYSQL_HOST=db -e MYSQL_USER=osticket -e MYSQL_PASSWORD=changeme \
-  tiredofit/osticket
-```
-
-## Option B: Zammad
+## Run it
 
 ```bash
-# Zammad publishes an official docker-compose setup
-git clone https://github.com/zammad/zammad-docker-compose.git
-cd zammad-docker-compose
+cd ticketing-system
+cp .env.example .env   # then edit .env with real passwords — never commit .env
 docker compose up -d
 ```
 
-## What to document once set up
+Wait ~30-60 seconds for the health check to pass, then visit:
 
-- [ ] Screenshot of the admin/agent dashboard
-- [ ] Ticket categories/priorities configured
-- [ ] Example tickets created (linked to the [runbooks](../runbooks/) that resolve them)
-- [ ] SLA or response-time settings (if configured)
+- **Customer portal:** http://localhost:8080/
+- **Agent/staff login:** http://localhost:8080/scp/
+
+Default admin login (from the [devinsolutions/osticket](https://github.com/devinsolutions/docker-osticket) image):
+
+- Username: `ostadmin`
+- Password: `Admin1`
+
+**Change this password immediately after first login** — it's a public default.
+
+## Stack
+
+| Service | Image | Purpose |
+|---|---|---|
+| `mysql` | `mysql:5.7` | osTicket's database |
+| `osticket` | `devinsolutions/osticket:1.17.5` | osTicket app (nginx + PHP-FPM), pinned version |
+
+Credentials are read from `.env` (gitignored) — see `.env.example` for the required variables.
+
+## Notes from getting this running
+
+The first image I tried (`tiredofit/osticket`) doesn't exist on Docker Hub. The second (`osticket/osticket:latest`) pulls fine but is abandoned since 2020 and throws a PHP parse error on install with current osTicket source — a good reminder to check an image's last-updated date and actual install behavior before trusting a README. `devinsolutions/osticket` is actively maintained with real version tags, which is why it's pinned here instead of using `:latest`.
+
+## What to document next
+
+- [ ] Change the default admin password (see above)
+- [ ] Configure ticket categories/priorities/departments
+- [ ] Create example tickets that map to each [runbook](../runbooks/) (e.g. a "printer not working" ticket resolved using the printer runbook)
+- [ ] Screenshot the agent dashboard once populated with example tickets
 
 ## Why this matters for a helpdesk role
 

@@ -6,3 +6,4 @@ venv/
 *.log.local
 .idea/
 .vscode/
+.env
