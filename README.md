@@ -31,17 +31,18 @@ flowchart TB
 | Date | Component | Status | Notes |
 |---|---|---|---|
 | 2026-08-31 | Ticketing system install (Docker) | ✅ Running | Real osTicket instance via Docker Compose — see [`ticketing-system/`](ticketing-system/) |
+| 2026-09-01 | Remote support tool setup (Docker) | ✅ Running | Self-hosted RustDesk server (hbbs/hbbr) via Docker Compose — see [`remote-support/`](remote-support/) |
 | _TBD_ | End-user client VM | Not started | Needs a Windows license/ISO — my own work to do |
-| _TBD_ | Remote support tool setup | Not started | |
 | _TBD_ | AD integration | Not started | Depends on home lab existing |
 
 ## Contents
 
 - [`ticketing-system/`](ticketing-system/) — setup notes for the self-hosted ticketing system
+- [`remote-support/`](remote-support/) — setup notes for the self-hosted RustDesk server
 - [`runbooks/`](runbooks/) — troubleshooting runbooks for common ticket types
 
 ## Tools
 
 - Ticketing: [osTicket](https://osticket.com/) (running — see [`ticketing-system/`](ticketing-system/))
-- Remote support: [RustDesk](https://rustdesk.com/) (open-source) or Windows Remote Assistance
+- Remote support: [RustDesk](https://rustdesk.com/), self-hosted (running — see [`remote-support/`](remote-support/))
 - Client OS: Windows 10/11 VM
