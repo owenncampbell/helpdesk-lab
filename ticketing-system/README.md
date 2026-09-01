@@ -22,6 +22,8 @@ Default admin login (from the [devinsolutions/osticket](https://github.com/devin
 
 **Change this password immediately after first login** — it's a public default.
 
+> Status: done on this instance — admin password has been changed from the default.
+
 ## Stack
 
 | Service | Image | Purpose |
@@ -37,7 +39,7 @@ The first image I tried (`tiredofit/osticket`) doesn't exist on Docker Hub. The 
 
 ## What to document next
 
-- [ ] Change the default admin password (see above)
+- [x] Change the default admin password (see above)
 - [ ] Configure ticket categories/priorities/departments
 - [ ] Create example tickets that map to each [runbook](../runbooks/) (e.g. a "printer not working" ticket resolved using the printer runbook)
 - [ ] Screenshot the agent dashboard once populated with example tickets
