@@ -40,7 +40,7 @@ The first image I tried (`tiredofit/osticket`) doesn't exist on Docker Hub. The 
 ## What to document next
 
 - [x] Change the default admin password (see above)
-- [ ] Configure ticket categories/priorities/departments
+- [x] Configure ticket categories/priorities/departments — see [`categories.md`](categories.md)
 - [ ] Create example tickets that map to each [runbook](../runbooks/) (e.g. a "printer not working" ticket resolved using the printer runbook)
 - [ ] Screenshot the agent dashboard once populated with example tickets
 
