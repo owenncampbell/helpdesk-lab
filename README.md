@@ -32,6 +32,7 @@ flowchart TB
 |---|---|---|---|
 | 2026-08-31 | Ticketing system install (Docker) | ✅ Running | Real osTicket instance via Docker Compose — see [`ticketing-system/`](ticketing-system/) |
 | 2026-09-01 | Remote support tool setup (Docker) | ✅ Running | Self-hosted RustDesk server (hbbs/hbbr) via Docker Compose — see [`remote-support/`](remote-support/) |
+| 2026-09-02 | Remote support connectivity validated | ✅ Validated | Self-hosted server's UDP registration is blocked by a Colima networking limitation (documented); validated remote support the way it's actually used — RustDesk Direct IP Access, tested end-to-end between this Mac and a second machine (Ubuntu) — see [`remote-support/`](remote-support/) |
 | _TBD_ | End-user client VM | Not started | Needs a Windows license/ISO — my own work to do |
 | _TBD_ | AD integration | Not started | Depends on home lab existing |
 
