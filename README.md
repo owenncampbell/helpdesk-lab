@@ -28,7 +28,7 @@ flowchart TB
     HBBS -. "UDP registration blocked by Colima's SSH tunnel" .-> UBUNTU
 ```
 
-This is what's actually running: osTicket and the RustDesk server both live in Docker Compose stacks on the tech workstation, and a second physical machine (Ubuntu, standing in for an end user) is used to validate remote support over the LAN. The self-hosted `hbbs`/`hbbr` server is up but unreachable over UDP under Colima (see [`remote-support/`](remote-support/) for the diagnosis), so the actual validated path is RustDesk's Direct IP Access, bypassing it.
+osTicket and the RustDesk server both live in Docker Compose stacks on the tech workstation, and a second physical machine (Ubuntu, standing in for an end user) is used to validate remote support over the LAN. The self-hosted `hbbs`/`hbbr` server is up but unreachable over UDP under Colima (see [`remote-support/`](remote-support/) for the diagnosis), so the actual validated path is RustDesk's Direct IP Access, bypassing it.
 
 ## Why this design
 
@@ -40,9 +40,9 @@ This is what's actually running: osTicket and the RustDesk server both live in D
 
 | Date | Component | Status | Notes |
 |---|---|---|---|
-| 2026-08-31 | Ticketing system install (Docker) | ✅ Running | Real osTicket instance via Docker Compose — see [`ticketing-system/`](ticketing-system/) |
-| 2026-09-01 | Remote support tool setup (Docker) | ✅ Running | Self-hosted RustDesk server (hbbs/hbbr) via Docker Compose — see [`remote-support/`](remote-support/) |
-| 2026-09-02 | Remote support connectivity validated | ✅ Validated | Self-hosted server's UDP registration is blocked by a Colima networking limitation (documented); validated remote support the way it's actually used — RustDesk Direct IP Access, tested end-to-end between two real machines — see [`remote-support/`](remote-support/) |
+| 2026-08-31 | Ticketing system install (Docker) | Running | Real osTicket instance via Docker Compose — see [`ticketing-system/`](ticketing-system/) |
+| 2026-09-01 | Remote support tool setup (Docker) | Running | Self-hosted RustDesk server (hbbs/hbbr) via Docker Compose — see [`remote-support/`](remote-support/) |
+| 2026-09-02 | Remote support connectivity validated | Validated | Self-hosted server's UDP registration is blocked by a Colima networking limitation (documented); validated remote support the way it's actually used — RustDesk Direct IP Access, tested end-to-end between two real machines — see [`remote-support/`](remote-support/) |
 
 ## Contents
 
