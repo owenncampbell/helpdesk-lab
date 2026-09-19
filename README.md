@@ -2,14 +2,14 @@
 
 > Part of my [IT & Cybersecurity Portfolio](https://github.com/owenncampbell/it-cybersecurity-portfolio)
 
-A simulated helpdesk environment built to practice — and demonstrate — the core Tier 1/2 IT support workflow: taking a ticket, triaging it, working it to resolution, and documenting it clearly. Every piece here is real, running infrastructure (Docker containers, an actual ticketing system, a self-hosted remote-support server), not diagrams or mockups.
+A simulated helpdesk environment built to practice and demonstrate the core IT support workflow of taking a ticket, triaging it, working it to resolution, and documenting it clearly. This project includes running infrastructure (Docker containers, a ticketing system, and a self-hosted remote-support server).
 
 ![Closed ticket queue in osTicket](ticketing-system/screenshots/closed-tickets-queue.png)
 
 ## What this demonstrates
 
 - **Ticket triage & categorization** — 4 departments and 4 help topics, each mapped to a specific escalation path. See [`ticketing-system/categories.md`](ticketing-system/categories.md).
-- **Troubleshooting methodology** — 4 runbooks covering the most common Tier 1 ticket types, each following the same shape: triage questions → diagnostic steps → resolution → escalation criteria. See [`runbooks/`](runbooks/).
+- **Troubleshooting methodology** — 4 runbooks covering the most common Tier 1 ticket types, each following the same plan: triage questions → diagnostic steps → resolution → escalation criteria. See [`runbooks/`](runbooks/).
 - **Real ticket handling** — 4 worked example tickets with internal triage notes and customer-facing replies, one left open intentionally to show a realistic in-progress queue. See [`ticketing-system/example-tickets.md`](ticketing-system/example-tickets.md).
 - **Remote support tooling** — a self-hosted RustDesk server, with a peer-to-peer connection validated end-to-end between two physical machines. See [`remote-support/`](remote-support/).
 
