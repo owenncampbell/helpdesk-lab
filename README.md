@@ -28,14 +28,13 @@ flowchart TB
     HBBS -. "UDP registration blocked by Colima's SSH tunnel" .-> UBUNTU
 ```
 
-This is what's actually running today: osTicket and the RustDesk server both live in Docker Compose stacks on this Mac, and a second physical machine (Ubuntu, standing in for an end user) is used to validate remote support over the LAN. The self-hosted `hbbs`/`hbbr` server is up but unreachable over UDP under Colima (see [`remote-support/`](remote-support/) for the diagnosis), so the actual validated path is RustDesk's Direct IP Access, bypassing it. There's no Windows client VM or Active Directory yet — see the build log below for what's still ahead.
+This is what's actually running: osTicket and the RustDesk server both live in Docker Compose stacks on this Mac, and a second physical machine (Ubuntu, standing in for an end user) is used to validate remote support over the LAN. The self-hosted `hbbs`/`hbbr` server is up but unreachable over UDP under Colima (see [`remote-support/`](remote-support/) for the diagnosis), so the actual validated path is RustDesk's Direct IP Access, bypassing it.
 
 ## Why this design
 
 - **Ticketing system** gives real experience with intake, categorization, prioritization, and closing tickets — the core workflow of any helpdesk role.
 - **Troubleshooting runbooks** turn general IT support knowledge into a repeatable process, then get refined against real worked tickets.
 - **Remote support tooling** mirrors how real helpdesk techs assist users without physical access to the machine — validated here via RustDesk Direct IP Access between two real machines, since the self-hosted rendezvous server is currently blocked by a Colima networking limitation (documented in [`remote-support/`](remote-support/)).
-- **AD integration** (planned, once the home lab it depends on exists) would add real account/group management tasks — password resets, lockouts, permission issues — against a live directory instead of just a documented process.
 
 ## Build log
 
@@ -44,8 +43,6 @@ This is what's actually running today: osTicket and the RustDesk server both liv
 | 2026-08-31 | Ticketing system install (Docker) | ✅ Running | Real osTicket instance via Docker Compose — see [`ticketing-system/`](ticketing-system/) |
 | 2026-09-01 | Remote support tool setup (Docker) | ✅ Running | Self-hosted RustDesk server (hbbs/hbbr) via Docker Compose — see [`remote-support/`](remote-support/) |
 | 2026-09-02 | Remote support connectivity validated | ✅ Validated | Self-hosted server's UDP registration is blocked by a Colima networking limitation (documented); validated remote support the way it's actually used — RustDesk Direct IP Access, tested end-to-end between two real machines — see [`remote-support/`](remote-support/) |
-| _TBD_ | End-user client VM | Not started | Needs a Windows license/ISO — my own work to do |
-| _TBD_ | AD integration | Not started | Depends on home lab existing |
 
 ## Contents
 
@@ -59,4 +56,3 @@ This is what's actually running today: osTicket and the RustDesk server both liv
 - Remote support: [RustDesk](https://rustdesk.com/), self-hosted server + client (running, connectivity validated via Direct IP Access — see [`remote-support/`](remote-support/))
 - Container runtime: Docker Compose on [Colima](https://github.com/abiosoft/colima) (macOS)
 - End-user stand-in: a second physical machine running Ubuntu, used to validate remote support over the LAN
-- Client OS: Windows 10/11 VM (not started — see build log)
