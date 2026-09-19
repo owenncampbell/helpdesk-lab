@@ -13,11 +13,11 @@ A simulated helpdesk environment built to practice and demonstrate the core IT s
 - **Real ticket handling** — 4 worked example tickets with internal triage notes and customer-facing replies, one left open intentionally to show a realistic in-progress queue. See [`ticketing-system/example-tickets.md`](ticketing-system/example-tickets.md).
 - **Remote support tooling** — a self-hosted RustDesk server, with a peer-to-peer connection validated end-to-end between two physical machines. See [`remote-support/`](remote-support/).
 
-## Actual architecture
+## Architecture
 
 ```mermaid
 flowchart TB
-    subgraph MAC[This Mac -- Tech Workstation]
+    subgraph TECH[Helpdesk Tech Workstation]
         TICKET[osTicket<br/>Docker, self-hosted]
         HBBS[RustDesk hbbs/hbbr<br/>Docker, self-hosted]
         RDCLIENT[RustDesk client]
@@ -28,7 +28,7 @@ flowchart TB
     HBBS -. "UDP registration blocked by Colima's SSH tunnel" .-> UBUNTU
 ```
 
-This is what's actually running: osTicket and the RustDesk server both live in Docker Compose stacks on this Mac, and a second physical machine (Ubuntu, standing in for an end user) is used to validate remote support over the LAN. The self-hosted `hbbs`/`hbbr` server is up but unreachable over UDP under Colima (see [`remote-support/`](remote-support/) for the diagnosis), so the actual validated path is RustDesk's Direct IP Access, bypassing it.
+This is what's actually running: osTicket and the RustDesk server both live in Docker Compose stacks on the tech workstation, and a second physical machine (Ubuntu, standing in for an end user) is used to validate remote support over the LAN. The self-hosted `hbbs`/`hbbr` server is up but unreachable over UDP under Colima (see [`remote-support/`](remote-support/) for the diagnosis), so the actual validated path is RustDesk's Direct IP Access, bypassing it.
 
 ## Why this design
 
