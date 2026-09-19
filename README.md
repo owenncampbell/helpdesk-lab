@@ -13,29 +13,29 @@ A simulated helpdesk environment built to practice and demonstrate the core IT s
 - **Real ticket handling** — 4 worked example tickets with internal triage notes and customer-facing replies, one left open intentionally to show a realistic in-progress queue. See [`ticketing-system/example-tickets.md`](ticketing-system/example-tickets.md).
 - **Remote support tooling** — a self-hosted RustDesk server, with a peer-to-peer connection validated end-to-end between two physical machines. See [`remote-support/`](remote-support/).
 
-## Target architecture
+## Actual architecture
 
 ```mermaid
 flowchart TB
-    USER[End User<br/>Windows client VM]
-    TICKET[Ticketing System<br/>osTicket, self-hosted via Docker]
-    TECH[Helpdesk Tech Workstation<br/>Remote support tooling]
-    AD[Active Directory<br/>user/group management]
+    subgraph MAC[This Mac -- Tech Workstation]
+        TICKET[osTicket<br/>Docker, self-hosted]
+        HBBS[RustDesk hbbs/hbbr<br/>Docker, self-hosted]
+        RDCLIENT[RustDesk client]
+    end
+    UBUNTU[Ubuntu machine<br/>stand-in for end user]
 
-    USER -- submits ticket --> TICKET
-    TICKET -- assigned to --> TECH
-    TECH -- remote session --> USER
-    TECH -- resets password / unlocks account --> AD
+    RDCLIENT -- "Direct IP Access, TCP P2P (validated)" --> UBUNTU
+    HBBS -. "UDP registration blocked by Colima's SSH tunnel" .-> UBUNTU
 ```
 
-This is the target design end-to-end. What's actually built and running today is the ticketing system and the remote-support server (see the build log below) — the Windows client VM and AD integration are still ahead.
+This is what's actually running today: osTicket and the RustDesk server both live in Docker Compose stacks on this Mac, and a second physical machine (Ubuntu, standing in for an end user) is used to validate remote support over the LAN. The self-hosted `hbbs`/`hbbr` server is up but unreachable over UDP under Colima (see [`remote-support/`](remote-support/) for the diagnosis), so the actual validated path is RustDesk's Direct IP Access, bypassing it. There's no Windows client VM or Active Directory yet — see the build log below for what's still ahead.
 
 ## Why this design
 
 - **Ticketing system** gives real experience with intake, categorization, prioritization, and closing tickets — the core workflow of any helpdesk role.
 - **Troubleshooting runbooks** turn general IT support knowledge into a repeatable process, then get refined against real worked tickets.
-- **Remote support tooling** mirrors how real helpdesk techs assist users without physical access to the machine.
-- **AD integration** (once the home lab it depends on exists) adds real account/group management tasks — password resets, lockouts, permission issues — against a live directory instead of just a documented process.
+- **Remote support tooling** mirrors how real helpdesk techs assist users without physical access to the machine — validated here via RustDesk Direct IP Access between two real machines, since the self-hosted rendezvous server is currently blocked by a Colima networking limitation (documented in [`remote-support/`](remote-support/)).
+- **AD integration** (planned, once the home lab it depends on exists) would add real account/group management tasks — password resets, lockouts, permission issues — against a live directory instead of just a documented process.
 
 ## Build log
 
@@ -56,5 +56,7 @@ This is the target design end-to-end. What's actually built and running today is
 ## Tools
 
 - Ticketing: [osTicket](https://osticket.com/), self-hosted (running — see [`ticketing-system/`](ticketing-system/))
-- Remote support: [RustDesk](https://rustdesk.com/), self-hosted (running — see [`remote-support/`](remote-support/))
+- Remote support: [RustDesk](https://rustdesk.com/), self-hosted server + client (running, connectivity validated via Direct IP Access — see [`remote-support/`](remote-support/))
+- Container runtime: Docker Compose on [Colima](https://github.com/abiosoft/colima) (macOS)
+- End-user stand-in: a second physical machine running Ubuntu, used to validate remote support over the LAN
 - Client OS: Windows 10/11 VM (not started — see build log)
